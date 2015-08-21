@@ -1,5 +1,5 @@
-* {
-    font-family: Georgia;
+body {
+    font-family: Arial, Verdana;
 }
 
 a {
@@ -16,8 +16,6 @@ div.bordered {
     width: 600px;
     padding: 20px;
     text-align: center;
-    border: 1px solid #ddd;
-    -webkit-border-radius: 20px;
 }
 
 #error {
@@ -27,19 +25,19 @@ div.bordered {
 }
 
 #ask {
-    font-size: 20pt;
+    font-size: 15pt;
 }
 
 #ask input {
-    font-size: 20pt;
-    padding: 10px;
+    font-size: 15pt;
     margin: 0 10px;
+    outline: none;
 }
 
 #ask span.join {
-    padding: 10px;
+    padding: 5px;
     background-color: #ddd;
-    -webkit-border-radius: 10px;
+    outline: none;
 }
 
 #channel {
@@ -105,7 +103,8 @@ div#input {
 
 div#input #message {
     width: 600px;
-    border: 5px solid #bbb;
+    border: 1px solid #bbb;
     -webkit-border-radius: 3px;
-    font-size: 30pt;
+    font-size: 25pt;
+    outline: none;
 }

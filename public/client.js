@@ -51,6 +51,7 @@ $(document).ready(function () {
 
   askA.click(function () {
     join(askInput.val());
+    location.href = 'http://192.168.1.114:3000/';
   });
 
   function join(name) {
