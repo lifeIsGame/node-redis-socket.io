@@ -7,6 +7,7 @@ $(document).ready(function () {
   var channel = $('#channel');
   var channelForm = $('#channel form');
   var container = $('div#msgs');
+  var inputMessage = $('input#message');
   var user = $('#user').text();
   var host = window.location.host//.split(':')[0];
   var socket = io.connect('http://' + host, {reconnect: false, 'try multiple transports': false});
@@ -36,28 +37,25 @@ $(document).ready(function () {
     console.log('reconnecting');
   });
 
-  if (user === '') {
-    ask.show();
+  if (user === '')
     askInput.focus();
-  } else {
+  else
     join(user);
-  }
 
   askInput.keydown(function (event) {
-    if (event.keyCode == 13) {
+    if (event.keyCode == 13)
       askA.click();
-    }
   });
 
   askA.click(function () {
     join(askInput.val());
-    location.href = 'http://192.168.1.114:3000/';
+    setTimeout(function () {
+      location.href = 'http://192.168.1.114:3000/';
+    }, 1000);
   });
 
   function join(name) {
-    ask.hide();
-    channel.show();
-    $('input#message').focus();
+    inputMessage.focus();
 
     $.post('/user', {"user": name})
       .success(function () {
@@ -71,35 +69,26 @@ $(document).ready(function () {
 
       var action = message.action;
       var struct = container.find('li.' + action + ':first');
-
-      if (struct.length < 1) {
-        console.log("Could not handle: " + message);
-        return;
-      }
-
       var messageView = struct.clone();
-
       messageView.find('.time').text((new Date()).toString("HH:mm:ss"));
 
       switch (action) {
         case 'message':
-          var matches;
-          if (matches = message.msg.match(/^\s*[\/\\]me\s(.*)/)) {
-            messageView.find('.user').text(message.user + ' ' + matches[1]);
-            messageView.find('.user').css('font-weight', 'bold');
-          } else {
             messageView.find('.user').text(message.user);
             messageView.find('.message').text(': ' + message.msg);
-          }
           break;
         case 'control':
           messageView.find('.user').text(message.user);
           messageView.find('.message').text(message.msg);
           messageView.addClass('control');
           break;
+        case 'typing':
+          $('form').find('label').text('text');
+          break;
       }
 
-      if (message.user == name) messageView.find('.user').addClass('self');
+      if (message.user == name)
+        messageView.find('.user').addClass('self');
 
       container.find('ul').append(messageView.show());
       container.scrollTop(container.find('ul').innerHeight());
@@ -111,6 +100,10 @@ $(document).ready(function () {
       var msg = input.val();
       socket.emit('chat', JSON.stringify({action: 'message', msg: msg}));
       input.val('');
+    });
+
+    $('#message').keypress(function (e) {
+
     });
   }
 });

@@ -13,7 +13,6 @@ router.get('/login', function (req, res, next) {
 });
 
 router.post('/user', function (req, res) {
-  console.log(req.body.user);
   req.session.user = req.body.user;
   res.redirect('/');
 });
