@@ -9,7 +9,9 @@ $(document).ready(function () {
   var container = $('div#msgs');
   var inputMessage = $('input#message');
   var user = $('#user').text();
-  var host = window.location.host//.split(':')[0];
+  var host = window.location.host;
+  //var port = window.location.host.split(':')[1];
+  //var socket = io.connect('http://' + host+ ':'+ port, {reconnect: false, 'try multiple transports': false});
   var socket = io.connect('http://' + host, {reconnect: false, 'try multiple transports': false});
 
   socket.on('connect', function () {
@@ -50,7 +52,7 @@ $(document).ready(function () {
   askA.click(function () {
     join(askInput.val());
     setTimeout(function () {
-      location.href = 'http://192.168.1.114:3000/';
+      location.href = 'http://'+host;
     }, 1000);
   });
 
